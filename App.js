@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { ScrollView, RefreshControl, StyleSheet } from 'react-native';
+import { FlatList, RefreshControl, StyleSheet } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import LanguageCard from './components/LanguageCard';
 
@@ -21,7 +20,7 @@ const languages = [
     id: 3,
     language: 'Java',
     experience: '3 года опыта',
-    logo: 'https://banner2.cleanpng.com/20180512/dhe/kisspng-professional-java-programmer-software-development-5af753799c72c9.9684910015261582016408.jpg',
+    logo: 'https://yt3.googleusercontent.com/_kyGVYrqGAOgInKv0_xXWQTc265etVnC6g9OHzxqfArxoyRlcNprei7y1o32Gv9t-THP623Hdg=s900-c-k-c0x00ffffff-no-rj',
   },
 ];
 
@@ -35,21 +34,23 @@ const App = () => {
     }, 2000);
   };
 
+  const renderItem = ({ item }) => (
+    <LanguageCard 
+      language={item.language} 
+      experience={item.experience} 
+      logo={item.logo} 
+    />
+  );
+
   return (
-    <ScrollView
+    <FlatList
+      data={languages}
+      renderItem={renderItem}
+      keyExtractor={(item) => item.id.toString()}
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }
-    >
-      {languages.map((lang) => (
-        <LanguageCard 
-          key={lang.id} 
-          language={lang.language} 
-          experience={lang.experience} 
-          logo={lang.logo} 
-        />
-      ))}
-    </ScrollView>
+    />
   );
 };
 
